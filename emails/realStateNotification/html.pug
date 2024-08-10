@@ -1,0 +1,31 @@
+head 
+  link(rel='stylesheet' href='./style.css' data-inline='data-inline')
+body
+  h2 Novos Terrenos
+    table
+      tbody
+        tr
+          th
+            table
+              tbody
+                tr
+                  th
+                    | Image
+                  th
+                    | Info
+                  th
+                    | Link
+                each realState in newItems
+                  tr
+                    td
+                      img(src=realState.img style='width: 280px; height: 180px;')
+                    td
+                      | #{realState.location}
+                      br
+                      | #{realState.size}m2
+                      br
+                      span(style='color:#a6afbf!important;font-size:12px;font-weight:400')
+                      | #{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 3 }).format(realState.price)}
+                    td
+                      a.link(href=realState.url target='_blank') See
+  

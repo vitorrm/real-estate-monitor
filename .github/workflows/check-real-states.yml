@@ -1,0 +1,35 @@
+name: Check-Real-State
+
+on:
+  workflow_dispatch:
+  schedule:
+    # https://crontab.guru/#0_12_*_*_1-5
+    - cron: '0 12 * * 1-5'
+
+jobs:
+  checking:
+    name: List new real states
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install
+      - run: mkdir -p workdir
+      - name: Download artifact
+        continue-on-error: true
+        uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          workflow: check-real-states.yml
+          workflow_conclusion: success
+          name: real-state-list
+          path: workdir
+      - run: npm start -- --to-email ${{secrets.TARGET_EMAIL}} --email-user ${{secrets.SMTP_EMAIL_USER}} --email-pass ${{secrets.SMTP_EMAIL_PASS}}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: real-state-list
+          path: workdir/real-states-db.json
+          retention-days: 5
