@@ -52,7 +52,7 @@ scrape().then(async (resultList) => {
   const storage = new Storage('./workdir/real-states-db.json')
   const selectedItems = []
   resultList.forEach((realState) => {
-    if (realState.price < 260000 && realState.size > 400) {
+    if (realState.price < 260000 && realState.size > 500) {
       selectedItems.push(realState)
     }
   })
@@ -60,6 +60,7 @@ scrape().then(async (resultList) => {
   const newItems = await entriesChecker.filterNewEntries(selectedItems)
   const removedItems = await entriesChecker.filterRemovedEntries(selectedItems)
   if (isNonEmptyList(newItems)) {
+    console.log('New items found, sending email', newItems)
     sendEmail({ toEmail: argv.toEmail, newItems })
   }
   if (isNonEmptyList(newItems) || isNonEmptyList(removedItems)) {
