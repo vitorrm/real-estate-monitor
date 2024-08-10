@@ -52,7 +52,7 @@ scrape().then(async (resultList) => {
   const storage = new Storage('./workdir/real-states-db.json')
   const selectedItems = []
   resultList.forEach((realState) => {
-    if (realState.price < 260000 && realState.size > 500) {
+    if (realState.price < 260000 && realState.size > 400) {
       selectedItems.push(realState)
     }
   })
