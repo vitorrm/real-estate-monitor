@@ -1,6 +1,6 @@
 /* eslint-disable no-await-in-loop */
 
-import IGUATEMI_DOMAIN from '../../../constants/Pages.js'
+import { IGUATEMI_DOMAIN } from '../../../constants/Pages.js'
 import RealState from '../../entity/RealState.js'
 import ResultCard from './ResultCard.js'
 

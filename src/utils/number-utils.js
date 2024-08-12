@@ -2,6 +2,7 @@ function convertToNumber(numberAsText) {
   try {
     if (numberAsText) {
       const cleanedString = numberAsText
+        .replace('m² tot.', '')
         .replace(/\./g, '')
         .replace(/,/g, '.')
         .replace('R$', '')

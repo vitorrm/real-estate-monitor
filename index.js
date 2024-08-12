@@ -1,33 +1,36 @@
-import puppeteer from 'puppeteer'
+import puppeteer from 'puppeteer-extra'
 import yargs from 'yargs/yargs'
+import StealthPlugin from 'puppeteer-extra-plugin-stealth'
 
 import { hideBin } from 'yargs/helpers'
-import IguatemiPage from './src/crawler/website/iguatemi/IguatemiPage.js'
+import CrawlerController from './src/crawler/CrawlerController.js'
 import EmailSender from './src/notification/EmailSender.js'
 import EntriesChecker from './src/EntriesChecker.js'
 import Storage from './src/storage/Storage.js'
 
 const { argv } = yargs(hideBin(process.argv))
 
+// add stealth plugin and use defaults (all evasion techniques)
+puppeteer.use(StealthPlugin())
+
 const scrape = async () => {
-  const args = [
-    '--no-sandbox',
-    '--disable-setuid-sandbox',
-    '--disable-infobars',
-    '--window-position=0,0',
-    '--ignore-certifcate-errors',
-    '--ignore-certifcate-errors-spki-list',
-    '--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36"',
-  ]
+  // const args = [
+  //   '--no-sandbox',
+  //   '--disable-setuid-sandbox',
+  //   '--disable-infobars',
+  //   '--window-position=0,0',
+  //   '--ignore-certifcate-errors',
+  //   '--ignore-certifcate-errors-spki-list',
+  //   '--user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"',
+  // ]
   const browser = await puppeteer.launch({
     headless: true,
     ignoreHTTPSErrors: true,
-    ignoreDefaultArgs: ['--disable-extensions'],
-    args,
+    // ignoreDefaultArgs: ['--disable-extensions'],
+    // args,
   })
-  const page = new IguatemiPage(browser)
-  await page.open()
-  const resultList = await page.getRealStateList()
+  const crawler = new CrawlerController(browser)
+  const resultList = await crawler.getRealStateList()
   browser.close()
   return resultList
 }

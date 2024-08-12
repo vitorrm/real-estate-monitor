@@ -16,6 +16,8 @@
     "nodemailer": "^6.9.14",
     "pug": "^3.0.3",
     "puppeteer": "^23.0.2",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
