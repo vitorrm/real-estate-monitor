@@ -15,8 +15,13 @@ class ImovelWebPage {
   async open() {
     this.page = await this.browser.newPage()
     await this.page.goto(INITIAL_PAGE, { waitUntil: 'load', timeout: 0 })
-    await this.page.waitForSelector('button[data-qa="cookies-policy-banner"]')
-    await this.page.click('button[data-qa="cookies-policy-banner"]')
+    try {
+      await this.page.waitForSelector('button[data-qa="cookies-policy-banner"]', { timeout: 3000 })
+      await this.page.click('button[data-qa="cookies-policy-banner"]')
+    } catch(err) {
+      console.log('Failed to close cookie banner', err)
+    }
+
   }
 
   async nextPage() {
@@ -40,9 +45,9 @@ class ImovelWebPage {
 }
 
 async function parseContent(page) {
-  await page.screenshot({
-    path: `screenshot${Math.floor(Math.random() * 1000)}.jpg`,
-  })
+//  await page.screenshot({
+//    path: `screenshot${Math.floor(Math.random() * 1000)}.jpg`,
+//  })
   const cards = await page.$$(
     '.postings-container [data-posting-type="PROPERTY"]',
   )
