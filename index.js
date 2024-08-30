@@ -73,5 +73,7 @@ scrape().then(async (resultList) => {
       newItems,
       removedItems,
     })
+    console.log('Items Saved')
   }
+  console.log('Process ended')
 })
