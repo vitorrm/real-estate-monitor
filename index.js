@@ -65,6 +65,8 @@ scrape().then(async (resultList) => {
   if (isNonEmptyList(newItems)) {
     console.log('New items found, sending email', newItems)
     sendEmail({ toEmail: argv.toEmail, newItems })
+  } else {
+    console.log('No item found')
   }
   if (isNonEmptyList(newItems) || isNonEmptyList(removedItems)) {
     storage.save({
