@@ -9,7 +9,7 @@ on:
 jobs:
   checking:
     name: List new real states
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04 # 24.04 has issues on running chromium and little info on the web
 
     steps:
       - uses: actions/checkout@v4
