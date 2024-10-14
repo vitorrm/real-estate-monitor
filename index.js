@@ -14,20 +14,20 @@ const { argv } = yargs(hideBin(process.argv))
 puppeteer.use(StealthPlugin())
 
 const scrape = async () => {
-  // const args = [
-  //   '--no-sandbox',
-  //   '--disable-setuid-sandbox',
-  //   '--disable-infobars',
-  //   '--window-position=0,0',
-  //   '--ignore-certifcate-errors',
-  //   '--ignore-certifcate-errors-spki-list',
-  //   '--user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"',
-  // ]
+  const args = [
+    '--no-sandbox',
+    '--disable-setuid-sandbox',
+    //   '--disable-infobars',
+    //   '--window-position=0,0',
+    //   '--ignore-certifcate-errors',
+    //   '--ignore-certifcate-errors-spki-list',
+    //   '--user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"',
+  ]
   const browser = await puppeteer.launch({
     headless: true,
     ignoreHTTPSErrors: true,
     // ignoreDefaultArgs: ['--disable-extensions'],
-    // args,
+    args,
   })
   const crawler = new CrawlerController(browser)
   const resultList = await crawler.getRealStateList()
